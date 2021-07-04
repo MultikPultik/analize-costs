@@ -1,28 +1,124 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div :class="[$style.header]">
+      <h1>Мои персональные расходы</h1>
+    </div>
+    <div class="wrapper">
+      <AddNewCost @onAddNewCost="addNewCostBtn" />
+      <AddPaymentsForm
+        @onAddNewPayment="addNewPaymentData"
+        v-if="showPaymentForm"
+      />
+      <PaymentsDisplay :items="paymentsList" />
+      <Pagination 
+        :records="paymentsList"
+        @onPagePagination="showPage"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import PaymentsDisplay from "./components/PaymentsDisplay.vue";
+import AddPaymentsForm from "@/components/AddPaymentsForm.vue";
+import AddNewCost from "@/components/AddNewCost.vue";
+import Pagination from '@/components/Pagination.vue';
+
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    PaymentsDisplay,
+    AddPaymentsForm,
+    AddNewCost,
+    Pagination,
+  },
+  data() {
+    return {
+      paymentsList: [],
+      visiblePaymentsList: [],
+      showPaymentForm: false,
+      // maxRow: 5,
+    };
+  },
+  methods: {
+    addNewCostBtn(st) {
+      console.log(st);
+      this.showPaymentForm = st;
+    },
+    addNewPaymentData(data) {
+      this.paymentsList = [...this.paymentsList, data];
+    },
+    showPage(p){
+      console.log(p);
+      // this.visiblePaymentsList = this.paymentsList.slice((p-1)*this.maxRow, p*this.maxRow)
+      // console.log(this.visiblePaymentsList, (p-1)*this.maxRow, p*this.maxRow);
+    },
+    fetchData() {
+      return [
+        {
+          date: "12.03.2020",
+          category: "Food",
+          value: 180,
+        },
+        {
+          date: "15.05.2020",
+          category: "Clothes",
+          value: 80,
+        },
+        {
+          date: "12.08.2020",
+          category: "Computer",
+          value: 280,
+        },
+        {
+          date: "12.08.2020",
+          category: "Computer2",
+          value: 280,
+        },
+        {
+          date: "12.08.2020",
+          category: "Computer3",
+          value: 280,
+        },
+        {
+          date: "12.08.2020",
+          category: "Computer4",
+          value: 280,
+        },
+        {
+          date: "12.08.2020",
+          category: "Computer5",
+          value: 280,
+        },
+        {
+          date: "12.08.2020",
+          category: "Computer6",
+          value: 280,
+        },
+      ];
+    },
+  },
+  created() {
+    this.paymentsList = this.fetchData();
+  },
+};
 </script>
 
-<style lang="scss">
+<style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  margin-left: 30px;
+}
+</style>
+
+<style lang="scss" scoped module>
+.header {
+  font-size: 20px;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  margin-bottom: 70px;
 }
 </style>
