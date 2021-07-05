@@ -9,11 +9,8 @@
         @onAddNewPayment="addNewPaymentData"
         v-if="showPaymentForm"
       />
-      <PaymentsDisplay :items="paymentsList" />
-      <Pagination 
-        :records="paymentsList"
-        @onPagePagination="showPage"
-      />
+      <PaymentsDisplay :items="paymentsList" :page="showPageNumber"/>
+      <Pagination :records="paymentsList" @onPagePagination="showPage" />
     </div>
   </div>
 </template>
@@ -22,8 +19,7 @@
 import PaymentsDisplay from "./components/PaymentsDisplay.vue";
 import AddPaymentsForm from "@/components/AddPaymentsForm.vue";
 import AddNewCost from "@/components/AddNewCost.vue";
-import Pagination from '@/components/Pagination.vue';
-
+import Pagination from "@/components/Pagination.vue";
 
 export default {
   name: "App",
@@ -38,7 +34,7 @@ export default {
       paymentsList: [],
       visiblePaymentsList: [],
       showPaymentForm: false,
-      // maxRow: 5,
+      showPageNumber: 1,
     };
   },
   methods: {
@@ -49,10 +45,8 @@ export default {
     addNewPaymentData(data) {
       this.paymentsList = [...this.paymentsList, data];
     },
-    showPage(p){
-      console.log(p);
-      // this.visiblePaymentsList = this.paymentsList.slice((p-1)*this.maxRow, p*this.maxRow)
-      // console.log(this.visiblePaymentsList, (p-1)*this.maxRow, p*this.maxRow);
+    showPage(p) {
+      this.showPageNumber = p;
     },
     fetchData() {
       return [
