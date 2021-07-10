@@ -9,8 +9,8 @@
         @onAddNewPayment="addNewPaymentData"
         v-if="showPaymentForm"
       />
-      <PaymentsDisplay :items="paymentsList" :page="showPageNumber"/>
-      <Pagination :records="paymentsList" @onPagePagination="showPage" />
+      <PaymentsDisplay :itemsList="paymentsList" :rows="maxRowList" :page="showPageNumber" />
+      <Pagination :records="paymentsList" :pages="maxPages" @onPagePagination="showPage" />
     </div>
   </div>
 </template>
@@ -35,7 +35,13 @@ export default {
       visiblePaymentsList: [],
       showPaymentForm: false,
       showPageNumber: 1,
+      maxRowList: 5,
     };
+  },
+  computed: {
+     maxPages: function(){
+       return Math.trunc(this.paymentsList.length / this.maxRowList + 1)
+     },
   },
   methods: {
     addNewCostBtn(st) {
@@ -48,6 +54,7 @@ export default {
     showPage(p) {
       this.showPageNumber = p;
     },
+
     fetchData() {
       return [
         {

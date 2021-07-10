@@ -7,8 +7,8 @@
       <div class="col4">Значение</div>
     </div>
 
-    <div class="list_data" v-for="(item, idx) in items_" :key="idx">
-      <div class="col1">{{ idx + 1 + maxRowVisible*page - maxRowVisible}}</div>
+    <div class="list_data" v-for="(item, idx) in items" :key="idx">
+      <div class="col1">{{ idx + 1 + rows*page - rows}}</div>
       <div class="col2">{{ item.date }}</div>
       <div class="col3">{{ item.category }}</div>
       <div class="col4">{{ item.value }}</div>
@@ -20,23 +20,22 @@
 export default {
   name: "PaymentsDisplay",
   props: {
-    items: {
+    itemsList: {
       type: Array,
       default: () => [],
     },
     page: {
       type: Number,
-      default: () => 1,
+      default: 1,
+    },
+    rows: {
+      type: Number,
+      default: 10,
     },
   },
-  data (){
-    return {
-      maxRowVisible: 5,
-    }
-  },
   computed: {
-    items_: function () {
-      return this.items.slice((this.page-1)*this.maxRowVisible, this.page*this.maxRowVisible)
+    items: function () {
+      return this.itemsList.slice((this.page-1)*this.rows, this.page*this.rows)
     },
   },
 };

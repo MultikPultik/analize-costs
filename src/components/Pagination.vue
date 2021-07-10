@@ -1,15 +1,19 @@
 <template>
   <div class="wrapper">
-    <button @click="onPagination('left')"><i class="fas fa-chevron-left"></i></button>
-    <button 
-      v-for="item in pages" 
+    <button @click="onPagination('left')">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button
+      :class="{ activ: currentPage === item }"
+      v-for="item in pages"
       @click="onPagination(item)"
       :key="item"
-      
-      >
+    >
       {{ item }}
     </button>
-    <button @click="onPagination('right')" key="left"><i class="fas fa-chevron-right"></i></button>
+    <button @click="onPagination('right')">
+      <i class="fas fa-chevron-right"></i>
+    </button>
   </div>
 </template>
 
@@ -21,15 +25,32 @@ export default {
       type: Array,
       default: () => [],
     },
+    pages: {
+      type: Number,
+      default: 1,
+    },
+  },
+  data() {
+    return {
+      page: 1,
+      currentPage: 1,
+    };
   },
   methods: {
-    onPagination: function(num){
-      this.$emit("onPagePagination", num)
-    }
-  },
-  computed: {
-    pages: function() {
-      return Math.trunc(this.records.length / 6 + 1);
+    onPagination: function(num) {
+      if (Number.isInteger(num)) {
+        this.$emit("onPagePagination", num);
+        this.currentPage = num;
+      } else {
+        if (num == "left" && this.page > 1) {
+          this.$emit("onPagePagination", --this.page);
+          this.currentPage = this.page;
+        }
+        if (num == "right" && this.page < this.pages) {
+          this.$emit("onPagePagination", ++this.page);
+          this.currentPage = this.page;
+        }
+      }
     },
   },
 };
@@ -42,7 +63,6 @@ export default {
   justify-content: center;
   width: 700px;
   margin: 10px;
-  /* border: 1px solid grey; */
   padding: 8px 5px;
   margin: 0;
   margin-top: 5px;
@@ -51,11 +71,15 @@ export default {
 button {
   border: none;
   width: 40px;
+  height: 30px;
   background: none;
   font-weight: 600;
 }
 button:hover {
   font-weight: 700;
   color: red;
+}
+.activ {
+  background: grey;
 }
 </style>
