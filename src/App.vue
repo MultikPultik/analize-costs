@@ -9,14 +9,23 @@
         @onAddNewPayment="addNewPaymentData"
         v-if="showPaymentForm"
       />
-      <PaymentsDisplay :itemsList="paymentsList" :rows="maxRowList" :page="showPageNumber" />
-      <Pagination :records="paymentsList" :pages="maxPages" @onPagePagination="showPage" />
+      <PaymentsDisplay
+        :itemsList="paymentsList"
+        :rows="maxRowList"
+        :page="showPageNumber"
+      />
+      <Pagination
+        :records="paymentsList"
+        :pages="maxPages"
+        @onPagePagination="showPage"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import PaymentsDisplay from "./components/PaymentsDisplay.vue";
+import mapMutations from "vuex";
+import PaymentsDisplay from "@/components/PaymentsDisplay.vue";
 import AddPaymentsForm from "@/components/AddPaymentsForm.vue";
 import AddNewCost from "@/components/AddNewCost.vue";
 import Pagination from "@/components/Pagination.vue";
@@ -39,11 +48,13 @@ export default {
     };
   },
   computed: {
-     maxPages: function(){
-       return Math.trunc(this.paymentsList.length / this.maxRowList + 1)
-     },
+    maxPages: function() {
+      return Math.trunc(this.paymentsList.length / this.maxRowList + 1);
+    },
   },
   methods: {
+    ...mapMutations(['setPaymentsListData']),
+
     addNewCostBtn(st) {
       console.log(st);
       this.showPaymentForm = st;
@@ -101,7 +112,10 @@ export default {
     },
   },
   created() {
-    this.paymentsList = this.fetchData();
+    // this.paymentsList = this.fetchData();
+    // this.$store.commit("setPaymentsListData", this.fetchData());
+    this.setPaymenstListData(this.fetchData());
+    // this.updatePayments(this.fetchData);
   },
 };
 </script>

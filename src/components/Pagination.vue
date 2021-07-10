@@ -78,8 +78,10 @@ button {
 button:hover {
   font-weight: 700;
   color: red;
+  cursor: pointer;
 }
 .activ {
-  background: grey;
+  background: #dadada;
+  font-weight: 700;
 }
 </style>
