@@ -7,8 +7,8 @@
       <div class="col4">Значение</div>
     </div>
 
-    <div class="list_data" v-for="(item, idx) in items" :key="idx">
-      <div class="col1">{{ idx + 1 + rows*page - rows}}</div>
+    <div class="list_data" v-for="item in items" :key="item.id">
+      <div class="col1">{{ item.id }}</div>
       <div class="col2">{{ item.date }}</div>
       <div class="col3">{{ item.category }}</div>
       <div class="col4">{{ item.value }}</div>
@@ -34,8 +34,11 @@ export default {
     },
   },
   computed: {
-    items: function () {
-      return this.itemsList.slice((this.page-1)*this.rows, this.page*this.rows)
+    items: function() {
+      return this.itemsList.slice(
+        (this.page - 1) * this.rows,
+        this.page * this.rows
+      );
     },
   },
 };

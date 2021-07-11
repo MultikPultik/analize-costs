@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import mapMutations from "vuex";
+import { mapMutations, mapActions } from "vuex";
 import PaymentsDisplay from "@/components/PaymentsDisplay.vue";
 import AddPaymentsForm from "@/components/AddPaymentsForm.vue";
 import AddNewCost from "@/components/AddNewCost.vue";
@@ -40,7 +40,7 @@ export default {
   },
   data() {
     return {
-      paymentsList: [],
+      // paymentsList: [],
       visiblePaymentsList: [],
       showPaymentForm: false,
       showPageNumber: 1,
@@ -51,16 +51,23 @@ export default {
     maxPages: function() {
       return Math.trunc(this.paymentsList.length / this.maxRowList + 1);
     },
+    paymentsList() {
+      return this.$store.getters.getPaymentList;
+    },
   },
   methods: {
-    ...mapMutations(['setPaymentsListData']),
+    ...mapMutations(["setPaymentsListData", "addDataToPaymentList"]),
+    ...mapActions({
+      fetchDataFromStore: "fetchData",
+      fetchCategory: "fetchCategoryList",
+    }),
 
     addNewCostBtn(st) {
       console.log(st);
       this.showPaymentForm = st;
     },
     addNewPaymentData(data) {
-      this.paymentsList = [...this.paymentsList, data];
+      this.addDataToPaymentList(data);
     },
     showPage(p) {
       this.showPageNumber = p;
@@ -114,8 +121,10 @@ export default {
   created() {
     // this.paymentsList = this.fetchData();
     // this.$store.commit("setPaymentsListData", this.fetchData());
-    this.setPaymenstListData(this.fetchData());
-    // this.updatePayments(this.fetchData);
+    // this.setPaymenstListData(this.fetchData());
+    //this.setPaymentsListData(this.fetchData());
+    this.fetchCategory();
+    this.fetchDataFromStore();
   },
 };
 </script>
