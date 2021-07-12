@@ -47,6 +47,7 @@ export default {
           this.currentPage = this.page;
         }
         if (num == "right" && this.page < this.pages) {
+          // debugger
           this.$emit("onPagePagination", ++this.page);
           this.currentPage = this.page;
         }

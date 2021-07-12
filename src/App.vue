@@ -8,6 +8,7 @@
       <AddPaymentsForm
         @onAddNewPayment="addNewPaymentData"
         v-if="showPaymentForm"
+        :categorylist="categoryList"
       />
       <PaymentsDisplay
         :itemsList="paymentsList"
@@ -44,7 +45,7 @@ export default {
       visiblePaymentsList: [],
       showPaymentForm: false,
       showPageNumber: 1,
-      maxRowList: 5,
+      maxRowList: 10,
     };
   },
   computed: {
@@ -53,6 +54,9 @@ export default {
     },
     paymentsList() {
       return this.$store.getters.getPaymentList;
+    },
+    categoryList() {
+      return this.$store.getters.getCategoryList;
     },
   },
   methods: {
@@ -67,6 +71,7 @@ export default {
       this.showPaymentForm = st;
     },
     addNewPaymentData(data) {
+      data.id = this.$store.getters.getPaymentList.length + 1;
       this.addDataToPaymentList(data);
     },
     showPage(p) {

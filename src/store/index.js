@@ -21,19 +21,19 @@ export default new Vuex.Store({
   },
   getters: {
     getPaymentList: state => state.paymentsList,
-    getCategorySum: state => state.categoryList.length
+    getCategoryList: state => state.categoryList,
   },
   actions: {
     fetchData(context) {
       return new Promise((resolve) => {
         setTimeout(() => {
           const items = [];
-          for (let i = 0; i < 50; i++) {
+          for (let i = 0; i < 55; i++) {
             items.push({
               date: "01.07.2021",
               category: context.state.categoryList[Math.trunc(Math.random() * context.state.categoryList.length)],
               value: Math.trunc(Math.random() * 180 + 1),
-              id: i
+              id: i + 1
             });
           }
           resolve(items);
