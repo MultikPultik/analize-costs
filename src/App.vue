@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+    <header>
+      <router-link to="/dashboard">Dashboard</router-link>
+      <router-link to="/about">About</router-link>
+    </header>
+    <router-view />
+    <br />
     <div :class="[$style.header]">
       <h1>Мои персональные расходы</h1>
     </div>
@@ -30,6 +36,9 @@ import PaymentsDisplay from "@/components/PaymentsDisplay.vue";
 import AddPaymentsForm from "@/components/AddPaymentsForm.vue";
 import AddNewCost from "@/components/AddNewCost.vue";
 import Pagination from "@/components/Pagination.vue";
+import PageDashboard from "./router/PageDashboard.vue";
+import PageAbout from "./router/PageAbout.vue";
+import Page404 from "./router/Page404.vue";
 
 export default {
   name: "App",
@@ -38,6 +47,9 @@ export default {
     AddPaymentsForm,
     AddNewCost,
     Pagination,
+    PageDashboard,
+    PageAbout,
+    Page404,
   },
   data() {
     return {
