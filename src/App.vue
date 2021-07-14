@@ -49,7 +49,7 @@ export default {
     };
   },
   computed: {
-    maxPages: function() {
+    maxPages: function () {
       return Math.trunc(this.paymentsList.length / this.maxRowList + 1);
     },
     paymentsList() {
@@ -71,8 +71,22 @@ export default {
       this.showPaymentForm = st;
     },
     addNewPaymentData(data) {
-      data.id = this.$store.getters.getPaymentList.length + 1;
-      this.addDataToPaymentList(data);
+      const paymentList = this.$store.getters.getPaymentList;
+      let eq = false;
+      data.id = paymentList.length + 1;
+      
+      eq = paymentList.find((el) => {
+        if (
+          el.date === data.date &&
+          el.category === data.category &&
+          el.value === data.value
+        ) {
+          return true;
+        }
+      });
+      if (!eq) {
+        this.addDataToPaymentList(data);
+      }
     },
     showPage(p) {
       this.showPageNumber = p;
@@ -124,10 +138,6 @@ export default {
     },
   },
   created() {
-    // this.paymentsList = this.fetchData();
-    // this.$store.commit("setPaymentsListData", this.fetchData());
-    // this.setPaymenstListData(this.fetchData());
-    //this.setPaymentsListData(this.fetchData());
     this.fetchCategory();
     this.fetchDataFromStore();
   },

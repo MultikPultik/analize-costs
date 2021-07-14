@@ -15,9 +15,13 @@ export default new Vuex.Store({
     addDataToPaymentList(state, payload) {
       state.paymentsList.push(payload);
     },
+    
     setCategoryList(state, payload) {
       state.categoryList = payload;
-    }
+    },
+    addCategoryList(state, payload) {
+      state.categoryList.push(payload);
+    },
   },
   getters: {
     getPaymentList: state => state.paymentsList,

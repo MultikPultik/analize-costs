@@ -3,28 +3,30 @@
     <input v-model.number="value" type="number" placeholder="Количество" />
     <!-- <input v-model.trim="category" type="text" placeholder="Категория" /> -->
     <select v-model="category">
-      <option
-        v-for="(item, idx) in categorylist"
-        :key="idx"
-        :value="item"
-      >
-      {{item}}
+      <option v-for="(item, idx) in categorylist" :key="idx" :value="item">
+        {{ item }}
       </option>
     </select>
     <input v-model.trim="date" type="text" placeholder="Дата" />
     <button @click="onClick">Сохранить</button>
+
+    <add-category-form />
   </div>
 </template>
 
+
 <script>
+import AddCategoryForm from "./AddCategoryForm.vue";
+
 export default {
+  components: { AddCategoryForm },
   name: "AddPaymentsForm",
   props: {
     categorylist: [],
   },
   data() {
     return {
-      value: 0,
+      value: 1,
       category: "Food",
       date: "",
     };
