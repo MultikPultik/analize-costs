@@ -49,5 +49,5 @@ export default new Vuex.Store({
       })
         .then(res => commit('setCategoryList', res));
     }
-  }
+  },
 })

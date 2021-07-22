@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a href="#">about</a>
+    Контент About
   </div>
 </template>
 
@@ -10,6 +10,5 @@ export default {
 }
 </script>
 
-<style>
 
-</style>
+
