@@ -1,25 +1,28 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import PageDashboard from './PageDashboard';
-import AddPaymentsForm from '../components/AddPaymentsForm';
-import PageAbout from './PageAbout';
-import Page404 from './Page404';
+import PageDashboard from '../page/PageDashboard.vue';
+import AddPaymentsForm from '../page/AddPaymentsForm.vue';
+import PageAbout from '../page/PageAbout.vue';
+import Page404 from '../page/Page404.vue';
 
 Vue.use(Router);
-const router = new Router({
+export default new Router({
   mode: 'history',
   routes: [
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: PageDashboard
-    },
-    {
-      path: '/add/payment/:cat',
-      name: 'addPaymentsForm',
-      component: AddPaymentsForm,
-      props: (route) => ({ value: route.query.value})
+      component: PageDashboard,
+      children: [
+        {
+          path: 'add/payment/:category',
+          name: 'payment',
+          component: AddPaymentsForm,  
+          // props: (route) => ({ value: route.query.value})
+          props: true
+        },
+      ]
     },
     {
       path: '/about',
@@ -33,11 +36,3 @@ const router = new Router({
   ],
   
 })
-
-export default router;
-
-// router.beforeEach((to, from, next) =>{
-//   // debugger;
-//   console.log(to, from);
-//   next();
-// }) 

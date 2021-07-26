@@ -4,8 +4,9 @@
       <h1>Мои персональные расходы</h1>
     </div>
     <div class="menu">
-      <a href="" @click="goToPage('dashboard')">Dashboard / </a>  
-      <a href="" @click="goToPage('about')">About</a>
+      <a href="#" @click="goToPage('dashboard')">Dashboard</a>
+      /
+      <a href="#" @click="goToPage('about')">About</a>
     </div>
 
     <router-view />
@@ -21,12 +22,6 @@ export default {
     goToPage(page) {
       this.$router.push({
         name: page,
-        // params: {
-        //   id: 123,
-        // },
-        // query: {
-        //   value: 100,
-        // }
       }).catch(()=>{
         console.log('duplicate');
       });
@@ -35,6 +30,7 @@ export default {
   created() {
     this.$store.dispatch("fetchData");
     this.$store.dispatch("fetchCategoryList");
+    console.log(this.$router);
   },
   
 };

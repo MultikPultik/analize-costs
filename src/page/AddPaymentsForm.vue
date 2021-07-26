@@ -14,7 +14,7 @@
     <input v-model.trim="date" type="text" placeholder="Дата" />
     <button @click="onClick">Сохранить</button>
     <br><br>
-    <div v-text="val"></div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -23,12 +23,13 @@ export default {
   name: "AddPaymentsForm",
   props: {
     categorylist: [],
-    value: null,
+    value: Number,
+    category: String,
   },
   data() {
     return {
       // value: 0,
-      category: "Food",
+      // category: "Food",
       date: "",
     };
   },

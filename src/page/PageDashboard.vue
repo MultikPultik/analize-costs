@@ -2,16 +2,17 @@
   <div>
     <div class="wrapper">
       <AddNewCost @onAddNewCost="addNewCostBtn" />
+      <div class="fastLinkPayments">
+        <a href="#" @click="setValue('payment', 'Food', 200)">Food/200</a>
+        <a href="#" @click="setValue('payment', 'Transport', 50)">Transport/50</a>
+        <a href="#" @click="setValue('payment', 'Restaurant', 2000)">Restaurant/2000</a>
+      </div>
+      <router-view> </router-view>
       <AddPaymentsForm
         @onAddNewPayment="addNewPaymentData"
         v-if="showPaymentForm"
         :categorylist="categoryList"
       />
-      <div class="fastLinkPayments">
-        <a href="" @click="setValue('addPaymentsForm', 'Food', 200)">Food/200</a>
-        <a href="" @click="setValue('addPaymentsForm', 'Transport', 50)">Transport/50</a>
-        <a href="" @click="setValue('addPaymentsForm', 'Entertainment', 2000)">Entertainment/2000</a>
-      </div>
       <PaymentsDisplay
         :itemsList="paymentsList"
         :rows="maxRowList"
@@ -29,7 +30,7 @@
 <script>
 import { mapMutations } from "vuex";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
-import AddPaymentsForm from "../components/AddPaymentsForm.vue";
+import AddPaymentsForm from "./AddPaymentsForm.vue";
 import AddNewCost from "../components/AddNewCost.vue";
 import Pagination from "../components/Pagination.vue";
 
@@ -74,30 +75,33 @@ export default {
     showPage(p) {
       this.PageNumber = p;
     },
-    setValue(page, cat, value){
-      this.$router.push({
-        name:page,
-        params:{
-          cat
-        },
-        query:{
-          value
-        },
-      }).catch(()=>{
-        console.log('fastlink duplicate');
-      })
-      console.log(cat, value);
+    setValue(page, category, value) {
+      this.$router
+        .push({
+          name: page,
+          params: {
+            category,
+            categorylist: this.categoryList,
+            value,
+          },
+          // query: {
+          //   value,
+          // },
+        })
+        .catch(() => {
+          console.log("fastlink duplicate");
+        });
+      // console.log(this.$router);
     },
   },
   mounted() {
     // this.PageNumber = Number(this.$route.params.page);
   },
-  
 };
 </script>
 
 <style>
-  .fastLinkPayments a {
-    margin-right: 10px;
-  }
+.fastLinkPayments a {
+  margin-right: 10px;
+}
 </style>
